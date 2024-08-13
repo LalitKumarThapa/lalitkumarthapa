@@ -1,0 +1,60 @@
+def encrypt_file(filename):
+    try:
+        with open(filename, 'r') as f:
+            data = f.read()
+
+        encrypted_data = ''.join(
+            chr((ord(char) - ord('a') + 13) % 26 + ord('a')) if char.islower() else
+            chr((ord(char) - ord('A') + 13) % 26 + ord('A')) if char.isupper() else char
+            for char in data
+        )
+
+        encrypted_filename = f"{filename}_rot13.txt"
+        with open(encrypted_filename, 'w') as f:
+            f.write(encrypted_data)
+
+        print(f"\nROT13 Encryption completed. Encrypted text saved in {encrypted_filename}.")
+
+    except IOError:
+        print("Unable to open the input file!!")
+
+
+def decrypt_file(filename):
+    try:
+        with open(filename, 'r') as f:
+            data = f.read()
+
+        decrypted_data = ''.join(
+            chr((ord(char) - ord('a') + 13) % 26 + ord('a')) if char.islower() else
+            chr((ord(char) - ord('A') + 13) % 26 + ord('A')) if char.isupper() else char
+            for char in data
+        )
+
+        decrypted_filename = f"{filename}_decrypted.txt"
+        with open(decrypted_filename, 'w') as f:
+            f.write(decrypted_data)
+
+        print(f"\nROT13 Decryption completed. Decrypted text saved in {decrypted_filename}.")
+
+    except IOError:
+        print("Unable to open the encrypted file!!")
+
+
+def main():
+    print("Choose operation:")
+    print("1. Encrypt")
+    print("2. Decrypt")
+    choice = int(input("Hi please enter your choice (1 or 2): "))
+
+    filename = input("Enter your file name: ")
+
+    if choice == 1:
+        encrypt_file(filename)
+    elif choice == 2:
+        decrypt_file(filename)
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+
+
+if __name__ == "__main__":
+    main()
